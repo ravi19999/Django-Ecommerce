@@ -18,7 +18,24 @@ def upload_image_path(instance, filename):
     return f"products/{new_filename}/{final_filename}"
 
 
+class ProductQuerySet(models.query.QuerySet):
+    def featured(self):
+        return self.filtered(featured=True)
+
+
 class ProductManager(models.Manager):
+    def active(self):
+        return self.filter(active=True)
+
+    def get_queryset(self):
+        return ProductQuerySet(self.model, self._db)
+
+    def all(self):
+        return self.get_queryset().featured
+
+    def featured(self):
+        return self.get_queryset().active()
+
     def get_by_id(self, id):
         qs = self.get_queryset.filter(id=id)
         if qs.couny() == 1:
@@ -32,7 +49,8 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10, default=39.99)
     image = models.ImageField(
         upload_to=upload_image_path, null=True, blank=True)
-
+    featured = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     objects = ProductManager()
 
     def __str__(self):
