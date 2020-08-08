@@ -18,8 +18,7 @@ def home_page(request):
 def about_page(request):
     context = {
         "title": "about world!",
-        "content": "welcome to the about page"
-
+        "content": "welcome to the about page",
     }
     return render(request, 'home_page.html', context)
 
@@ -29,7 +28,8 @@ def contact_page(request):
     context = {
         "title": "contact world!",
         "content": "welcome to the contact page",
-        'form': contact_form
+        'form': contact_form,
+        "brand": "New Brand Name"
     }
 
     if contact_form.is_valid():
