@@ -6,9 +6,20 @@
     <div class="row">
         {% for obj in object_list %}
         <div class="col">
+            {{forloop.counter}}
             {% include 'products/snippets/card.html' with instance=obj %}
+            {% if forloop.counter|divisibleby:2 %}
         </div>
-        {% endfor %}
     </div>
+    <div class="row">
+        <div class="col-12">
+            </hr>
+        </div>
+        {% else %}
+    </div>
+    {%endif%}
+</div>
+{% endfor %}
+</div>
 </div>
 {% endblock content %}
