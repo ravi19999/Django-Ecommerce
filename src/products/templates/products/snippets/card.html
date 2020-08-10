@@ -1,20 +1,13 @@
 <div class="card" style="width:20rem">
   {% if instance.image %}
-  <a href="{{instance.get_absolute_url}}"></a
-  ><img
-    src="{{instance.image.url}}"
-    alt="{{instance.title}} logo"
-    class="card-img-top"
-  />
+  <a href="{{instance.get_absolute_url}}"></a><img src="{{instance.image.url}}" alt="{{instance.title}} logo"
+    class="card-img-top" />
   {% endif %}
 
   <div class="card-body">
     <h4 class="card-title">{{instance.title}}</h4>
     <p class="card-text">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam minima
-      adipisci culpa? Cumque asperiores reprehenderit, autem rem molestias
-      doloribus corporis dolore incidunt iste quaerat, perferendis id hic
-      quisquam? Repellendus, molestiae.
+      {{instance.description|linebreaks|truncatewords:12}}
     </p>
     <a href="{{instance.get_absolute_url}}" class="btn btn-primary">View</a>
     <!-- <a
