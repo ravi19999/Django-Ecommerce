@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.urls import reverse
 
 from .views import home_page, about_page, contact_page, login_page, register_page
 
@@ -28,7 +29,7 @@ urlpatterns = [
     url(r'^login/$', login_page),
     url(r'^register/$', register_page),
     url(r'^admin/', admin.site.urls),
-    url(r'products/',include("products.urls")),
+    url(r'products/', include("products.urls", namespace='products')),
 ]
 
 if settings.DEBUG:
