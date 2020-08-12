@@ -5,7 +5,7 @@
         <div class="column">
             {% block content %}
             <h2> {{ object.title }} </h2> <br>
-            {{object.timestamp|timesince}} ago
+            {{object.timestamp|timesince}}
             <h3>{{"some title here"|title}}</h3>
             {{ object.description | linebreaks}} <br>
             {% if object.image %}
