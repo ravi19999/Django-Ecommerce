@@ -1,9 +1,9 @@
 from django.conf.urls import url
 
 from .views import (
-    ProductSearchView,
+    SearchProductView,
 )
 
 urlpatterns = [
-    url(r'^$', ProductSearchView.as_view(), name='list'),
+    url(r'^$', SearchProductView.as_view(), name='list'),
 ]
