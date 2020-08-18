@@ -4,10 +4,11 @@ from django.shortcuts import render
 
 
 def cart_home(request):
-    # print(request.session)
-    # print(dir(request.session))
-    # key = request.session.session_key
-    # print(key)
-    request.session['cart_id'] = 22
-    request.session['user'] = request.session.username
+    cart_id = request.session.get('cart_id', None)
+    if cart_id is None:
+        print('create new cart')
+        request.session['cart_id'] = 12
+    else:
+        print('Cart ID exists')
+
     return render(request, "carts/home.html", {})
