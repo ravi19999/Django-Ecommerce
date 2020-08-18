@@ -1,3 +1,7 @@
+'''
+    This is the database file for the produts app
+'''
+
 import random
 import os
 from django.db import models
