@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
 
 <div class="row">
-    <div class="column">
+    <div class="col-12 col-md-12">
         {% block content %}
         <h2> {{ object.title }} </h2> <br>
         {{object.timestamp|timesince}}
-        <h3>{{"some title here"|title}}</h3>
         {{ object.description | linebreaks}} <br>
         {% if object.image %}
         <img src="{{ object.image.url }}" class='img-fluid'>
+        {% endif %}
+    </div>
+    <div class="col-12 col-md-6">
+        {{cart}}
+        {% if object in cart.products.all %}
+        In cart <button class="btn btn-link">Remove?</button>
+        {%else%}
+        In cart <button class="btn btn-success">Add to cart</button>
         {% endif %}
     </div>
 </div>

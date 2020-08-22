@@ -6,14 +6,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from .views import home_page, about_page, contact_page, login_page, register_page
-from carts.views import cart_home
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
     url(r'^about/$', about_page, name='about'),
     url(r'^contact/$', contact_page, name='contact'),
     url(r'^login/$', login_page, name='login'),
-    url(r'^cart/$', cart_home, name='cart'),
+    url(r'^cart/', include("carts.urls", namespace='cart')),
+    # url(r'^cart/$', cart_home, name='cart'),
     url(r'^register/$', register_page, name='register'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include("products.urls", namespace='products')),
