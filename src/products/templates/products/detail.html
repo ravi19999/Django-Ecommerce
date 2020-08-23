@@ -1,22 +1,24 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-<div class="row">
-    <div class="col-12 col-md-12">
-        {% block content %}
-        <h2> {{ object.title }} </h2> <br>
-        {{object.timestamp|timesince}}
-        {{ object.description | linebreaks}} <br>
+
+{% block content %}
+
+
+<div class='row'>
+    <div class='col-12 col-md-6'>
+        <h1>{{ object.title }}</h1>
+        {{ object.timestamp|timesince }} ago
+        {{ object.description|linebreaks }}<br />
         {% if object.image %}
-        <img src="{{ object.image.url }}" class='img-fluid'>
+        <img src='{{ object.image.url }}' class='img-fluid' />
         {% endif %}
     </div>
-    <div class="col-12 col-md-6">
-        {{cart}}
-        {% if object in cart.products.all %}
-        In cart <button class="btn btn-link">Remove?</button>
-        {%else%}
-        In cart <button class="btn btn-success">Add to cart</button>
-        {% endif %}
+    <div class='col-12 col-md-6'>
+        {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+
+
     </div>
 </div>
-{% endblock content %}
+
+
+{% endblock %}
