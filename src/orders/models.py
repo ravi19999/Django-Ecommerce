@@ -44,7 +44,6 @@ pre_save.connect(pre_save_create_order_id, sender=Order)
 def post_save_cart_total(sender, instance, created, *args, **kwargs):
     if not created:
         cart_obj = instance
-        cart_total = cart_obj.total
         cart_id = cart_obj.id
         qs = Order.objects.filter(cart__id=cart_id)
         if qs.count() == 1:
