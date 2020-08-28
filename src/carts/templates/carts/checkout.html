@@ -2,6 +2,8 @@
 
 
 {% block content %}
+{{ object.order_id }} -- {{ object.cart }}
+
 
 {% if not billing_profile %}
 <div class='row text-center'>
@@ -11,8 +13,9 @@
     </div>
     <div class='col-12 col-md-6'>
         Continue as Guest
+
         {% url "guest_register" as guest_register_url %}
-        {% include 'accounts/snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url%}
+        {% include 'accounts/snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
     </div>
 
 </div>
