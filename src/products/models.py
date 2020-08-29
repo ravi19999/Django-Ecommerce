@@ -15,8 +15,6 @@ def get_filename_ext(filepath):
 
 
 def upload_image_path(instance, filename):
-    # print(instance)
-    # print(filename)
     new_filename = random.randint(1, 3910209312)
     name, ext = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(
@@ -40,7 +38,6 @@ class ProductQuerySet(models.query.QuerySet):
                    Q(price__icontains=query) |
                    Q(tag__title__icontains=query)
                    )
-        # tshirt, t-shirt, t shirt, red, green, blue,
         return self.filter(lookups).distinct()
 
 
@@ -51,11 +48,10 @@ class ProductManager(models.Manager):
     def all(self):
         return self.get_queryset().active()
 
-    def featured(self):  # Product.objects.featured()
+    def featured(self):
         return self.get_queryset().featured()
 
     def get_by_id(self, id):
-        # Product.objects == self.get_queryset()
         qs = self.get_queryset().filter(id=id)
         if qs.count() == 1:
             return qs.first()
@@ -79,7 +75,6 @@ class Product(models.Model):
     objects = ProductManager()
 
     def get_absolute_url(self):
-        # return "/products/{slug}/".format(slug=self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
 
     def __str__(self):
