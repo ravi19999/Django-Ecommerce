@@ -49,7 +49,9 @@ def checkout_home(request):
     billing_address_form = AddressForm()
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(
         request)
+    address_qs = None
     if billing_profile is not None:
+        address_qs = Address.objects.filter(billing_profile=billing_profile)
         order_obj, order_obj_created = Order.objects.new_or_get(
             billing_profile, cart_obj)
         if shipping_address_id:
@@ -78,5 +80,6 @@ def checkout_home(request):
         "guest_form": guest_form,
         'address_form': address_form,
         'billing_address_form': billing_address_form,
+        'address_qs': address_qs
     }
     return render(request, "carts/checkout.html", context)
