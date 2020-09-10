@@ -44,18 +44,20 @@ def cart_update(request):
             cart_obj.products.remove(product_obj)
             added = False
         else:
+            # cart_obj.products.add(product_id)
             cart_obj.products.add(product_obj)
             added = True
         request.session['cart_items'] = cart_obj.products.count()
-
-        if request.is_ajax():
-            print('Ajax request')
+        # return redirect(product_obj.get_absolute_url())
+        if request.is_ajax():  # Asynchronous JavaScript And XML / JSON
+            print("Ajax request")
             json_data = {
-                'added': added,
-                'removed': not added,
-                'cartItemCount': cart_obj.products.count(),
+                "added": added,
+                "removed": not added,
+                "cartItemCount": cart_obj.products.count()
             }
-            return JsonResponse(json_data)
+            return JsonResponse(json_data, status=200)  # HttpResponse
+            # return JsonResponse({"message": "Error 400"}, status=400) # Django Rest Framework
     return redirect("cart:home")
 
 
