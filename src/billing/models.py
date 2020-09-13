@@ -3,6 +3,9 @@ from django.db import models
 from django.db.models.signals import post_save
 
 from accounts.models import GuestEmail
+
+import stripe
+stripe.api_key = 'sk_test_51HQwJDE9dKyATRmBfqOTCDB0lrrbYsQ402TLCd9iKBXkmrB4O7Ct3nVkjxK9HiW5Ren13woNiRCnx9lft3HX9Zr000oke1IFQH'
 User = settings.AUTH_USER_MODEL
 
 
