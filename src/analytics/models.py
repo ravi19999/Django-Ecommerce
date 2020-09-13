@@ -11,6 +11,10 @@ from .utils import get_client_ip
 
 User = settings.AUTH_USER_MODEL
 
+FORCE_SESSION_TO_ONE = getattr(settings, 'FORCE_SESSION_TO_ONE', False)
+FORCE_INACTIVE_USER_ENDSESSION = getattr(
+    settings, 'FORCE_SESSION_TO_ONE', False)
+
 
 class ObjectViewed(models.Model):
     # User instance instance.id
@@ -55,9 +59,53 @@ class UserSession(models.Model):
     active = models.BooleanField(default=True)
     ended = models.BooleanField(default=False)
 
+    def end_session(self):
+        session_key = self.session_key
+        ended = self.ended
+        try:
+            Session.objects.get(pk=session_key).delete()
+            self.active = False
+            ended = True
+            self.save()
+        except:
+            pass
+        return self.ended
+
+
+def post_save_session_receiver(sender, instance, created, *args, **kwargs):
+    qs = UserSession.objects.filter(
+        user=instance.user, ended=False, active=False).exclude(id=instance.id)
+    for i in qs:
+        i.end_session()
+
+    if not instance.active and not instance.ended:
+        instance.end_session()
+
+
+if FORCE_SESSION_TO_ONE:
+    post_save.connect(post_save_session_receiver, sender=UserSession)
+
+
+def post_save_user_changed_receiver(sender, instance, created, *args, **kwargs):
+    if instance.is_active == False:
+        qs = UserSession.objects.filter(
+            user=instance.user, ended=False, active=False)
+        for i in qs:
+            i.end_session()
+
+
+if FORCE_INACTIVE_USER_ENDSESSION:
+    post_save.connect(post_save_user_changed_receiver, sender=UserSession)
+
 
 def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
-    print(instance)
+    user = instance
+    ip_address = get_client_ip(request)
+    session_key = request.session.session_key
+    UserSession.objects.create(user=user,
+                               ip_address=ip_address,
+                               session_key=session_key,
+                               )
 
 
 user_logged_in.connect(user_logged_in_receiver)
