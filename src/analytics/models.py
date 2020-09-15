@@ -18,11 +18,12 @@ FORCE_INACTIVE_USER_ENDSESSION = getattr(
 
 class ObjectViewed(models.Model):
     # User instance instance.id
-    user = models.ForeignKey(User, blank=True, null=True)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.CASCADE)
     ip_address = models.CharField(
         max_length=220, blank=True, null=True)  # IP Field
     # User, Product, Order, Cart, Address
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()  # User id, Product id, Order id,
     content_object = GenericForeignKey(
         'content_type', 'object_id')  # Product instance
@@ -51,7 +52,8 @@ object_viewed_signal.connect(object_viewed_receiver)
 
 
 class UserSession(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.CASCADE)
     ip_address = models.CharField(
         max_length=220, blank=True, null=True)  # IP Field
     timestamp = models.DateTimeField(auto_now_add=True)
