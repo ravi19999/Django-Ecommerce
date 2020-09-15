@@ -6,8 +6,10 @@ from django.db.models.signals import post_save, pre_save
 from accounts.models import GuestEmail
 User = settings.AUTH_USER_MODEL
 
+# abc@teamcfe.com -->> 1000000 billing profiles
+# user abc@teamcfe.com -- 1 billing profile
 
-stripe.api_key = "sk_test_cu1lQmcg1OLffhLvYrSCp5XE"
+stripe.api_key = "sk_test_51HQwJDE9dKyATRmBfqOTCDB0lrrbYsQ402TLCd9iKBXkmrB4O7Ct3nVkjxK9HiW5Ren13woNiRCnx9lft3HX9Zr000oke1IFQH"
 
 
 class BillingProfileManager(models.Manager):
@@ -68,5 +70,35 @@ def user_created_receiver(sender, instance, created, *args, **kwargs):
 post_save.connect(user_created_receiver, sender=User)
 
 
-# class Card(models.Model):
-#     pass
+class CardManager(models.Manager):
+    def add_new(self, billing_profile, stripe_card_response):
+        if str(stripe_card_response.object) == "customer":
+            new_card = self.model(
+                billing_profile=billing_profile,
+                stripe_id=stripe_card_response.id,
+                currency=stripe_card_response.currency,
+                country=stripe_card_response.livemode,
+                exp_month=stripe_card_response.balance,
+                exp_year=stripe_card_response.balance,
+                last4=stripe_card_response.balance
+            )
+            new_card.save()
+            return new_card
+        return None
+
+
+class Card(models.Model):
+    billing_profile = models.ForeignKey(
+        BillingProfile, on_delete=models.CASCADE)
+    stripe_id = models.CharField(max_length=120)
+    currency = models.CharField(max_length=120, null=True, blank=True)
+    country = models.CharField(max_length=20, null=True, blank=True)
+    exp_month = models.IntegerField(null=True, blank=True)
+    exp_year = models.IntegerField(null=True, blank=True)
+    last4 = models.CharField(max_length=4, null=True, blank=True)
+    default = models.BooleanField(default=True)
+
+    objects = CardManager()
+
+    def __str__(self):
+        return "{} {}".format(self.currency, self.stripe_id)
