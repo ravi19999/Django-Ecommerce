@@ -37,7 +37,7 @@ def payment_method_create_view(request):
             card_response = stripe.Customer.create(
                 source=token)
             new_card_obj = Card.objects.add_new(
-                billing_profile, card_response)
+                billing_profile, token)
             print(new_card_obj)  # start saving our cards too!
         return JsonResponse({"message": "Success! Your card was added."})
     return HttpResponse("error", status_code=401)

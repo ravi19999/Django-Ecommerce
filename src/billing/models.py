@@ -47,6 +47,9 @@ class BillingProfile(models.Model):
     def __str__(self):
         return self.email
 
+    def charge(self, order_obj, card=None):
+        return Charge.objects.do(self, order_obj, card)
+
 
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     if not instance.customer_id and instance.email:
@@ -71,8 +74,10 @@ post_save.connect(user_created_receiver, sender=User)
 
 
 class CardManager(models.Manager):
-    def add_new(self, billing_profile, stripe_card_response):
-        if str(stripe_card_response.object) == "customer":
+    def add_new(self, billing_profile, token):
+        if token:
+            card_response = stripe.Customer.create(
+                source=token)
             new_card = self.model(
                 billing_profile=billing_profile,
                 stripe_id=stripe_card_response.id,
@@ -110,14 +115,14 @@ class ChargeManager(models.Manager):
         card_obj = card
         if card_obj is None:
             cards = billing_profile.card_set.filter(default=True)
-            if card.exists():
+            if cards.exists():
                 card_obj = cards.first()
-        if card is None:
+        if card_obj is None:
             return False, "No cards available"
         c = stripe.Charge.create(
             amount=int(order_obj.total * 100),
-            currency="NPR",
-            customer=BillingProfile.customer_id,
+            currency="USD",
+            customer=billing_profile.customer_id,
             description="Charge for someone@noone.com",
             metadata={"order_id": order_obj.order_id}
         )
@@ -135,7 +140,8 @@ class ChargeManager(models.Manager):
 
 
 class Charge(models.Model):
-    billing_profile = models.ForeignKey(BillingProfile,on_delete=models.CASCADE)
+    billing_profile = models.ForeignKey(
+        BillingProfile, on_delete=models.CASCADE)
     stripe_id = models.CharField(max_length=120, null=True, blank=True)
     paid = models.BooleanField(default=False)
     refunded = models.BooleanField(default=False)
