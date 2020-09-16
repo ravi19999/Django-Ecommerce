@@ -34,9 +34,8 @@ def payment_method_create_view(request):
         token = request.POST.get('token')
         print(token)
         if token is not None:
-            customer = stripe.Customer.retrieve(billing_profile.customer_id)
             card_response = stripe.Customer.create(
-                description="My first test customer")
+                source=token)
             new_card_obj = Card.objects.add_new(
                 billing_profile, card_response)
             print(new_card_obj)  # start saving our cards too!

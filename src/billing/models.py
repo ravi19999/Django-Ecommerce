@@ -102,3 +102,45 @@ class Card(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.currency, self.stripe_id)
+
+
+class ChargeManager(models.Manager):
+
+    def do(self, billing_profile, order_obj, card=None):
+        card_obj = card
+        if card_obj is None:
+            cards = billing_profile.card_set.filter(default=True)
+            if card.exists():
+                card_obj = cards.first()
+        if card is None:
+            return False, "No cards available"
+        c = stripe.Charge.create(
+            amount=int(order_obj.total * 100),
+            currency="NPR",
+            customer=BillingProfile.customer_id,
+            description="Charge for someone@noone.com",
+            metadata={"order_id": order_obj.order_id}
+        )
+        new_charge_obj = self.model(
+            billing_profile=billing_profile,
+            stripe_id=c.id,
+            paid=c.paid,
+            refunded=c.refunded,
+            brand=c.payment_method_details.get('brand'),
+            status=c.status,
+            created=c.created,
+        )
+        new_charge_obj.save()
+        return new_charge_obj.paid, new_charge_obj.brand
+
+
+class Charge(models.Model):
+    billing_profile = models.ForeignKey(BillingProfile,on_delete=models.CASCADE)
+    stripe_id = models.CharField(max_length=120, null=True, blank=True)
+    paid = models.BooleanField(default=False)
+    refunded = models.BooleanField(default=False)
+    brand = models.CharField(max_length=120, blank=True, null=True)
+    status = models.CharField(max_length=120, null=True, blank=True)
+    created = models.IntegerField(blank=True, null=True)
+
+    objects = ChargeManager()
