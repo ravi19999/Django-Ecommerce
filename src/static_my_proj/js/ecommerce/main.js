@@ -125,7 +125,7 @@ $(document).ready(function() {
             btnLoad,
             loadingHtml,
             loadingClasses,
-            10000,
+            1000,
             currentTimeout
           );
 
@@ -190,7 +190,7 @@ $(document).ready(function() {
           redirectToNext(nextUrl, 1500);
         },
         error: function(error) {
-          // console.log(error)
+          console.log(error);
           $.alert({
             title: "An error occured",
             content: "Please try adding your card again.",
