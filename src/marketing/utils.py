@@ -59,13 +59,23 @@ class Mailchimp(object):
         return status
 
     def add_email(self, email):
-        status = "subscribed"
-        self.check_valid_status(status)
-        data = {
-            "email_address": email,
-            "status": status
-        }
-        endpoint = self.get_members_endpoint()
-        r = requests.post(endpoint, auth=("", self.key), data=json.dumps(data))
-        return r.json()
+        # status = "subscribed"
+        # self.check_valid_status(status)
+        # data = {
+        #     "email_address": email,
+        #     "status": status
+        # }
+        # endpoint = self.get_members_endpoint()
+        # r = requests.post(endpoint, auth=("", self.key), data=json.dumps(data))
+        # return r.json()
+        self.change_subscription_status(email,status='unsubscribed')
 
+
+    def unsubscribe(self,email):
+        self.change_subscription_status(email,status='unsubscribed')
+
+    def subscribe(self,email):
+        self.change_subscription_status(email,status='subscribed')
+
+    def pending(self,email):
+        self.change_subscription_status(email,status='pending') 
