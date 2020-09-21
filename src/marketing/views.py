@@ -1,14 +1,23 @@
-from django.shortcuts import render
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render, redirect
 from django.views.generic import UpdateView
+from django.http import HttpResponse
 
 from .forms import MarketingPreferenceFrom
 from .models import MarketingPreference
 
 
-class MarketingPreferenceUpdateView(UpdateView):
+class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
     form_class = MarketingPreferenceFrom
     template_name = 'base/forms.html'
     success_url = '/settings/email'
+    success_message = "Your email preferences have been updated. Thank You."
+
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        if not user.is_authenticated():
+            return redirect('/login/?next=/settings/email/')
+        return super(MarketingPreferenceUpdateView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super(MarketingPreferenceUpdateView,
