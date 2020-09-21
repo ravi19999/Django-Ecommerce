@@ -3,9 +3,10 @@ from carts.views import cart_detail_api_view
 from billing.views import payment_method_view, payment_method_create_view
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from accounts.views import LoginView, RegisterView, guest_register_view
+from marketing.views import MarketingPreferenceUpdateView
+
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
@@ -34,6 +35,8 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include(("products.urls", 'products'), namespace='products')),
     url(r'^search/', include(("search.urls", 'search'), namespace='search')),
+    url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),
+        name='marketing-pref'),
     url(r'^admin/', admin.site.urls),
 ]
 
