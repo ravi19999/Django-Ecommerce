@@ -75,7 +75,7 @@ class Mailchimp(object):
         }
         endpoint = self.get_members_endpoint()
         r = requests.post(endpoint, auth=("", self.key), data=json.dumps(data))
-        return "helo", r.json()
+        return "hello", r.json()
 
     def unsubscribe(self, email):
         return self.change_subcription_status(email, status='unsubscribed')
