@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['raviecomm.herokuapp.com']
 
