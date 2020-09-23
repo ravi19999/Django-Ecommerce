@@ -26,7 +26,7 @@ SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com']
 
 
 # Application definition
@@ -164,3 +164,8 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 1000000
 SECURE_FRAME_DENY = True
+
+AWS_GROUP_NAME = "Ravi_Ecommerce_Group"
+AWS_USERNAME = 'ravi-ecommerce-user'
+AWS_ACCESS_KEY_ID = 'AKIAS7R4B5LMJ4GHOFGU'
+AWS_SECRET_KEY = '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'
