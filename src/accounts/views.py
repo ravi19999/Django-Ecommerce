@@ -13,9 +13,9 @@ from .models import GuestEmail
 from .signals import user_logged_in
 
 
-@login_required
-def account_home_view(request):
-    return render(request, "accounts/home.html")
+# @login_required
+# def account_home_view(request):
+#     return render(request, "accounts/home.html")
 
 
 class AccountHomeView(LoginRequiredMixin, DetailView):
