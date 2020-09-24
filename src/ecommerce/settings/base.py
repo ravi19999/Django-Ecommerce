@@ -26,7 +26,7 @@ SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['raviecomm.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -155,17 +155,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "media_root")
 
-CORS_REPLACE_HTTPS_REFERER = True
-HOST_SCHEME = "https://"
+CORS_REPLACE_HTTPS_REFERER = False
+HOST_SCHEME = "http://"
 SECURE_PROXY_SSL_HEADER = None
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 1000000
-SECURE_FRAME_DENY = True
-
-AWS_GROUP_NAME = "Ravi_Ecommerce_Group"
-AWS_USERNAME = 'ravi-ecommerce-user'
-AWS_ACCESS_KEY_ID = 'AKIAS7R4B5LMJ4GHOFGU'
-AWS_SECRET_KEY = '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'
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_HSTS_SECONDS = None
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_FRAME_DENY = False

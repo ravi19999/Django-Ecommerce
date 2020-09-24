@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, DetailView
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
@@ -8,6 +11,18 @@ from django.utils.http import is_safe_url
 from .forms import LoginForm, RegisterForm, GuestForm
 from .models import GuestEmail
 from .signals import user_logged_in
+
+
+@login_required
+def account_home_view(request):
+    return render(request, "accounts/home.html")
+
+
+class AccountHomeView(LoginRequiredMixin, DetailView):
+    template_name = 'accounts/home.html'
+
+    def get_object(self):
+        return self.request.user
 
 
 class LoginView(FormView):
