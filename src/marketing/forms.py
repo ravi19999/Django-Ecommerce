@@ -3,12 +3,12 @@ from django import forms
 from .models import MarketingPreference
 
 
-class MarketingPreferenceFrom(forms.ModelForm):
+class MarketingPreferenceForm(forms.ModelForm):
     subscribed = forms.BooleanField(
-        label="Receive Marketing Email?", required=False)
+        label='Receive Marketing Email?', required=False)
 
     class Meta:
         model = MarketingPreference
         fields = [
-            'subscribed',
+            'subscribed'
         ]

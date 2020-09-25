@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include(("products.urls", 'products'), namespace='products')),
     url(r'^search/', include(("search.urls", 'search'), namespace='search')),
-    url(r'^settings/', RedirectView.as_view(url='/account')),
+    url(r'^settings/$', RedirectView.as_view(url='/account')),
     url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(),
         name='marketing-pref'),
     url(r'^webhooks/mailchimp/$', MailchimpWebhookView.as_view(),
