@@ -1,3 +1,4 @@
+from django.views.generic import CreateView, FormView
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
