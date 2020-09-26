@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['raviecomm.herokuapp.com', 'raviDahal.pythonanywhere.com']
 
@@ -35,7 +35,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Django-Ecommerce <jastosuko@gmail.com>'
 
-MANAGERS = (('Jasto Suko', "jastosuko@gmail.com"))
+MANAGERS = (('Jasto Suko', "hwdrowdy@gmail.com"))
 
 ADMINS = MANAGERS
 
