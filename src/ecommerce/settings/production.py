@@ -33,7 +33,7 @@ EMAIL_HOST_USER = 'hwdrowdy@gmail.com'
 EMAIL_HOST_PASSWORD = 'Someone1@'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Django-Ecommerce <jastosuko@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Django-Ecommerce <hwdrowdy@gmail.com>'
 
 MANAGERS = (('Jasto Suko', "hwdrowdy@gmail.com"))
 
