@@ -24,11 +24,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hwdrowdy@gmail.com'
+EMAIL_HOST_PASSWORD = 'Someone1@'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Django-Ecommerce <jastosuko@gmail.com>'
 
+MANAGERS = (('Jasto Suko', "jastosuko@gmail.com"))
+
+ADMINS = MANAGERS
 # Application definition
 
 INSTALLED_APPS = [
