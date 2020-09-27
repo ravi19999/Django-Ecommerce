@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from random import randint
@@ -161,8 +162,9 @@ class EmailActivation(models.Model):
             if self.key:
                 base_url = getattr(settings, 'BASE_URL',
                                    'https://www.raviecomm.pythonanywhere.com')
-                key_path = self.key
-                path = f"{base_url}/{key_path}"
+                key_path = reverse("accounts:email-activate",
+                                   kwargs={'key': self.key})
+                path = f"{base_url}{key_path}"
                 context = {
                     'path': path,
                     'email': self.email,
