@@ -34,6 +34,7 @@ EMAIL_HOST_PASSWORD = 'Someone1@'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Django-Ecommerce <hwdrowdy@gmail.com>'
+BASE_URL = "https://www.raviecomm.herokuapp.com"
 
 MANAGERS = (
     ('Jasto Suko', "hwdrowdy@gmail.com"),
