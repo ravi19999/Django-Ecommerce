@@ -145,7 +145,7 @@ class EmailActivation(models.Model):
             user = self.user
             user.is_active = True
             user.save()
-            self.activated = True,
+            self.activated = True
             self.save()
             return True
         return False
@@ -161,29 +161,28 @@ class EmailActivation(models.Model):
         if not self.activated and not self.forced_expired:
             if self.key:
                 base_url = getattr(settings, 'BASE_URL',
-                                   'https://www.raviecomm.pythonanywhere.com')
+                                   'https://www.pythonecommerce.com')
                 key_path = reverse("accounts:email-activate",
-                                   kwargs={'key': self.key})
-                path = f"{base_url}{key_path}"
+                                   kwargs={'key': self.key})  # use reverse
+                path = "{base}{path}".format(base=base_url, path=key_path)
                 context = {
                     'path': path,
-                    'email': self.email,
+                    'email': self.email
                 }
                 txt_ = get_template(
                     "registration/emails/verify.txt").render(context)
                 html_ = get_template(
                     "registration/emails/verify.html").render(context)
-                subject = "1-Click Email Verification"
+                subject = '1-Click Email Verification'
                 from_email = settings.DEFAULT_FROM_EMAIL
-
-                recepient_list = [self.email]
+                recipient_list = [self.email]
                 sent_mail = send_mail(
                     subject,
                     txt_,
                     from_email,
-                    recepient_list,
+                    recipient_list,
                     html_message=html_,
-                    fail_silently=False
+                    fail_silently=False,
                 )
                 return sent_mail
         return False
