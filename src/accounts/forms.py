@@ -1,9 +1,10 @@
-from .models import EmailActivation
 from django import forms
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
+from .models import GuestEmail
+from .models import EmailActivation, GuestEmail
 
 User = get_user_model()
 
@@ -69,7 +70,25 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 class GuestForm(forms.Form):
-    email = forms.EmailField()
+    # email = forms.EmailField()
+    class Meta:
+        model = GuestEmail
+        fields = [
+            'email',
+        ]
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(GuestForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        obj = super(GuestForm, self).save(commit=False)
+        if commit:
+            obj.save()
+            request = self.request
+            request.session['guest_email_id'] = obj.id
+
+        return obj
 
 
 class LoginForm(forms.Form):
