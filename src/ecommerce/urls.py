@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^$', home_page, name='home'),
     url(r'^about/$', about_page, name='about'),
     url(r'^accounts/$', RedirectView.as_view(url='/account')),
+    url(r'^orders/', include(("orders.urls"), namespace='orders')),
     url(r'^account/', include(("accounts.urls"), namespace='accounts')),
     url(r'^accounts/', include(("accounts.passwords.urls"))),
     url(r'^contact/$', contact_page, name='contact'),
