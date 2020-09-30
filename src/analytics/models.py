@@ -16,6 +16,24 @@ FORCE_INACTIVE_USER_ENDSESSION = getattr(
     settings, 'FORCE_SESSION_TO_ONE', False)
 
 
+class ObjectViewedQuerySet(models.query.QuerySet):
+    def by_model(self, model_class, model_queryset=False):
+        c_type = ContentType.objects.get_for_model(model_class)
+        qs = self.filter(content_type=c_type)
+        if model_queryset:
+            viewed_ids = [x.object_id for x in qs]
+            return(model_class.objects.filter(pk__in=viewed_ids))
+        return qs
+
+
+class ObjectViewedManager(models.Manager):
+    def get_queryset(self):
+        return ObjectViewedQuerySet(self.model, using=self._db)
+
+    def by_model(self, model_class, model_queryset=False):
+        return self.get_queryset().by_model(model_class, model_queryset=model_queryset)
+
+
 class ObjectViewed(models.Model):
     # User instance instance.id
     user = models.ForeignKey(
@@ -28,6 +46,8 @@ class ObjectViewed(models.Model):
     content_object = GenericForeignKey(
         'content_type', 'object_id')  # Product instance
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    objects = ObjectViewedManager()
 
     def __str__(self):
         return "%s viewed on %s" % (self.content_object, self.timestamp)
