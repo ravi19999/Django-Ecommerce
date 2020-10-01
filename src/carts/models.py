@@ -2,6 +2,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save, m2m_changed
+from django.forms import Textarea
 
 from products.models import Product
 
@@ -47,6 +48,14 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    @property
+    def is_digital(self):
+        qs = self.products.all().filter(is_digital=False)
+        new_qs = qs.filter(is_digital=False)
+        if new_qs.exists():
+            return False
+        return True
 
 
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
