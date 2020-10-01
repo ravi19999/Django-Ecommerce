@@ -85,6 +85,8 @@ def checkout_home(request):
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
 
+    shipping_address_required = not cart_obj.is_digital
+
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(
         request)
     address_qs = None
@@ -130,7 +132,8 @@ def checkout_home(request):
         "address_form": address_form,
         "address_qs": address_qs,
         'has_card': has_card,
-        'publish_key': STRIPE_PUB_KEY
+        'publish_key': STRIPE_PUB_KEY,
+        'shipping_address_required': shipping_address_required,
 
     }
     return render(request, "carts/checkout.html", context)
