@@ -1,4 +1,5 @@
 import math
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.core.urlresolvers import reverse
@@ -8,6 +9,7 @@ from addresses.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
 from ecommerce.utils import unique_order_id_generator
+from products.models import Product
 
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
@@ -153,3 +155,21 @@ def post_save_order(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(post_save_order, sender=Order)
+
+
+class ProductPurchaseManager(models.Model):
+    def all(self):
+        return self.get_queryset().filter(refunded=False)
+
+
+class ProductPurchase(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    billing_profile = models.ForeignKey(BillingProfile)
+    product = models.ForeignKey(Product)
+    refunded = models.BooleanField(default=False)
+    timestamp = timestamp = models.DateTimeField(auto_now_add=True)
+
+    objects = ProductPurchaseManager()
+
+    def __str__(self):
+        return self.product.title
