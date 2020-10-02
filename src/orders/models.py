@@ -113,7 +113,7 @@ class Order(models.Model):
         if billing_profile and shipping_done and billing_address and total > 0:
             return True
         return False
-    
+
     def update_purchases(self):
         for p in self.cart.products.all():
             obj, created = ProductPurchase.objects.get_or_create(
@@ -168,18 +168,19 @@ def post_save_order(sender, instance, created, *args, **kwargs):
 post_save.connect(post_save_order, sender=Order)
 
 
-class ProductPurchaseManager(models.Model):
+class ProductPurchaseManager(models.Manager):
     def all(self):
         return self.get_queryset().filter(refunded=False)
 
 
 class ProductPurchase(models.Model):
-    order_id            = models.CharField(max_length=120)
-    billing_profile     = models.ForeignKey(BillingProfile) # billingprofile.productpurchase_set.all()
-    product             = models.ForeignKey(Product) # product.productpurchase_set.count()
-    refunded            = models.BooleanField(default=False)
-    updated             = models.DateTimeField(auto_now=True)
-    timestamp           = models.DateTimeField(auto_now_add=True)
+    order_id = models.CharField(max_length=120)
+    # billingprofile.productpurchase_set.all()
+    billing_profile = models.ForeignKey(BillingProfile)
+    product = models.ForeignKey(Product)  # product.productpurchase_set.count()
+    refunded = models.BooleanField(default=False)
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = ProductPurchaseManager()
 
