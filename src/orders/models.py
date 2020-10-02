@@ -113,11 +113,22 @@ class Order(models.Model):
         if billing_profile and shipping_done and billing_address and total > 0:
             return True
         return False
+    
+    def update_purchases(self):
+        for p in self.cart.products.all():
+            obj, created = ProductPurchase.objects.get_or_create(
+                order_id=self.order_id,
+                product=p,
+                billing_profile=self.billing_profile
+            )
+        return ProductPurchase.objects.filter(order_id=self.order_id).count()
 
     def mark_paid(self):
-        if self.check_done():
-            self.status = 'paid'
-            self.save()
+        if self.status != 'paid':
+            if self.check_done():
+                self.status = "paid"
+                self.save()
+                self.update_purchases()
         return self.status
 
 
@@ -163,11 +174,12 @@ class ProductPurchaseManager(models.Model):
 
 
 class ProductPurchase(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
-    billing_profile = models.ForeignKey(BillingProfile)
-    product = models.ForeignKey(Product)
-    refunded = models.BooleanField(default=False)
-    timestamp = timestamp = models.DateTimeField(auto_now_add=True)
+    order_id            = models.CharField(max_length=120)
+    billing_profile     = models.ForeignKey(BillingProfile) # billingprofile.productpurchase_set.all()
+    product             = models.ForeignKey(Product) # product.productpurchase_set.count()
+    refunded            = models.BooleanField(default=False)
+    updated             = models.DateTimeField(auto_now=True)
+    timestamp           = models.DateTimeField(auto_now_add=True)
 
     objects = ProductPurchaseManager()
 
