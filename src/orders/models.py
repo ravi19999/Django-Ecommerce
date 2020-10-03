@@ -212,11 +212,3 @@ class ProductPurchase(models.Model):
 
     def __str__(self):
         return self.product.title
-
-
-class ProductFile(models.Model):
-    product = models.ForeignKey(Product)
-    file = models.FileField(upload_to='products/')
-
-    def __str__(self):
-        return str(self.file.name)
