@@ -115,6 +115,8 @@ class ProductFile(models.Model):
     product = models.ForeignKey(Product)
     file = models.FileField(upload_to=upload_product_file_loc,
                             storage=FileSystemStorage(location=settings.PROTECTED_ROOT))
+    free = models.BooleanField(default=False)
+    user_required = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.file.name)
