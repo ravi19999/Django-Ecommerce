@@ -163,6 +163,8 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "static_root")
+PROTECTED_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), "static_cdn", "protected_media")
 
 
 MEDIA_URL = '/media/'
