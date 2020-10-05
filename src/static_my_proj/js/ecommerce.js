@@ -121,7 +121,7 @@ $(document).ready(function() {
         var submitSpan = thisForm.find(".submit-span");
         if (data.added) {
           submitSpan.html(
-            "In cart <button type='submit' class='btn btn-link'>Remove?</button>"
+            "<a href='/cart/>In cart</a> <button type='submit' class='btn btn-link'>Remove?</button>"
           );
         } else {
           submitSpan.html(
