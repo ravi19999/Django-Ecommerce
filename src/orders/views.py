@@ -16,8 +16,6 @@ class OrderListView(LoginRequiredMixin, ListView):
 class OrderDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
-        # return Order.objects.get(id=self.kwargs.get('id'))
-        # return Order.objects.get(slug=self.kwargs.get('slug'))
         qs = Order.objects.by_request(
             self.request
         ).filter(
