@@ -1,1 +1,1 @@
-web: gunicorn src.ecommerce.wsgi 
+web: sh -c 'cd ./src/ && exec gunicorn ecommerce --log-file -'
