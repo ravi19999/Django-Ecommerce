@@ -1,1 +1,1 @@
-import ecommerce
+from ecommerce.wsgi import *
