@@ -186,4 +186,8 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 1000000
 SECURE_FRAME_DENY = True
 
+<<<<<<< HEAD
 # django_heroku.settings(locals())
+=======
+#django_heroku.settings(locals())
+>>>>>>> 587576758a994117994ec9226e87bfd92a51f32e
