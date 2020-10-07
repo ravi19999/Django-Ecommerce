@@ -24,7 +24,9 @@ $(document).ready(function() {
     var pubKey = paymentForm.attr("data-token");
     var nextUrl = paymentForm.attr("data-next-url");
     // Create a Stripe client
-    var stripe = Stripe(pubKey);
+    var stripe = Stripe(
+      "pk_test_51HQwJDE9dKyATRmBYJ8cUGFJpGeL7pOdz17Pla6gVZEXRLVmjQCTaBSIuL8j96Qv8SYPwVNbuPpSPR9paqcqiUbt00LdZ9DqcB"
+    );
 
     // Create an instance of Elements
     var elements = stripe.elements();
@@ -125,7 +127,7 @@ $(document).ready(function() {
             btnLoad,
             loadingHtml,
             loadingClasses,
-            1000,
+            10000,
             currentTimeout
           );
 
@@ -190,7 +192,7 @@ $(document).ready(function() {
           redirectToNext(nextUrl, 1500);
         },
         error: function(error) {
-          console.log(error);
+          // console.log(error)
           $.alert({
             title: "An error occured",
             content: "Please try adding your card again.",
