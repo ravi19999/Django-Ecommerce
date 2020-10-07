@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import django_heroku
+# import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
@@ -26,7 +26,7 @@ SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['raviecomm.herokuapp.com', 'raviDahal.pythonanywhere.com']
+ALLOWED_HOSTS = ['raviecomm.herokuapp.com', 'ravidahal.pythonanywhere.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'hwdrowdy@gmail.com'
@@ -34,7 +34,7 @@ EMAIL_HOST_PASSWORD = 'Someone1@'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Django-Ecommerce <hwdrowdy@gmail.com>'
-BASE_URL = "https://www.raviecomm.herokuapp.com"
+BASE_URL = "https://www.ravidahal.pythonanywhere.com"
 
 MANAGERS = (
     ('Jasto Suko', "hwdrowdy@gmail.com"),
@@ -168,14 +168,13 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "static_root")
+PROTECTED_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), "static_cdn", "protected_media")
 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "media_root")
-
-PROTECTED_ROOT = os.path.join(os.path.dirname(
-    BASE_DIR), "static_cdn", "protected_media")
 
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
@@ -187,4 +186,4 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 1000000
 SECURE_FRAME_DENY = True
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
