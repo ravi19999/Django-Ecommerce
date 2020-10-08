@@ -87,6 +87,8 @@ class User(AbstractBaseUser):
 
     @ property
     def is_staff(self):
+        if self.is_admin:
+            return True
         return self.staff
 
     @ property
@@ -120,7 +122,7 @@ class EmailActivationManager(models.Manager):
         return self.get_queryset().confirmable()
 
     def email_exists(self, email):
-        return self.get_queryset().filter(Q(email=email) | Q(user__email=email)).filter(activated = False)
+        return self.get_queryset().filter(Q(email=email) | Q(user__email=email)).filter(activated=False)
 
 
 class EmailActivation(models.Model):
