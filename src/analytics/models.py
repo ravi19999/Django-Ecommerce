@@ -17,6 +17,15 @@ FORCE_INACTIVE_USER_ENDSESSION = getattr(
 
 
 class ObjectViewedQuerySet(models.query.QuerySet):
+    def recent(self):
+        return self.obrder_by("-updated", "-timestamp")
+
+    def by_status(self, status="shipped"):
+        return self.filter(status=status)
+
+    def not_refunded(self):
+        return self.exclude(status='refunded')
+
     def by_model(self, model_class, model_queryset=False):
         c_type = ContentType.objects.get_for_model(model_class)
         qs = self.filter(content_type=c_type)
