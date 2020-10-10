@@ -1,6 +1,7 @@
 import math
 from django.conf import settings
 from django.db import models
+from django.db.models import Count, Sum, Avg
 from django.db.models.signals import pre_save, post_save
 from django.core.urlresolvers import reverse
 
@@ -22,6 +23,16 @@ ORDER_STATUS_CHOICES = (
 class OrderManagerQuerySet(models.query.QuerySet):
     def recent(self):
         return self.order_by("-updated", "-timestamp")
+
+    def totals_data(self):
+        return self.aggregate(Sum("total"), Avg("total"))
+
+    def cart_data(self):
+        return self.aggregate(
+            Sum("cart__products__price"),
+            Avg("cart__products__price"),
+            Count("cart__products")
+        )
 
     def by_status(self, status="shipped"):
         return self.filter(status=status)
@@ -62,6 +73,7 @@ class OrderManager(models.Manager):
         return obj, created
 
 
+# Random, Unique
 class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True)
     order_id = models.CharField(max_length=120, blank=True)  # AB31DE3
@@ -87,7 +99,7 @@ class Order(models.Model):
     objects = OrderManager()
 
     class Meta:
-        ordering = ['-timestamp', '-updated']
+       ordering = ['-timestamp', '-updated']
 
     def get_absolute_url(self):
         return reverse("orders:detail", kwargs={'order_id': self.order_id})
@@ -175,7 +187,7 @@ post_save.connect(post_save_cart_total, sender=Cart)
 
 
 def post_save_order(sender, instance, created, *args, **kwargs):
-    # print("running")
+    #print("running")
     if created:
         print("Updating... first")
         instance.update_total()
