@@ -6,13 +6,14 @@ from .forms import ContactForm
 
 
 def home_page(request):
+    title = f"Hello {request.user.full_name}" if request.user.is_authenticated() else 'Howdy mate, please log in or sign up'
     context = {
-        "title": "Hello World!",
+        "title": title,
         "content": " Welcome to the homepage.",
 
     }
     if request.user.is_authenticated():
-        context["premium_content"] = "YEAHHHHHH"
+        context["premium_content"] = f'{request.user.full_name} you are amazing'
     return render(request, "home_page.html", context)
 
 
