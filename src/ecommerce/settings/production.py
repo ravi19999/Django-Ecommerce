@@ -26,7 +26,7 @@ SECRET_KEY = '@!-)jwmuzh8btr380g61=g+#&zzei&dz2(&=xbvxztady)_p(r'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['raviecomm.herokuapp.com', 'ravidahal.pythonanywhere.com']
+ALLOWED_HOSTS = ['raviecomm.herokuapp.com', '.pythonanywhere.com']
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'hwdrowdy@gmail.com'
@@ -168,13 +168,14 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "static_root")
-PROTECTED_ROOT = os.path.join(os.path.dirname(
-    BASE_DIR), "static_cdn", "protected_media")
-
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "static_cdn", "media_root")
+
+PROTECTED_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), "static_cdn", "protected_media")
 
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
