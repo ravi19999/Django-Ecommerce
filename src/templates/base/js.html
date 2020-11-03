@@ -1,19 +1,16 @@
 {% load static %}
+<!-- random-photos.js -->
+<script src="{% static 'js/random_photos.js' %}"> </script>
 
-<script>
-	let randomized = Math.floor(Math.random()*10)
-	fetch('https://api.unsplash.com/search/photos?page=1&query=night&client_id=DWe3Aq2S4cOfU7K_NsuagSQ_CEr1v-Ya89-7K3U5KVQ').then((response) => response.json()).then((apple) => {let syau = apple.results[randomized].urls.regular;document.body.style.backgroundImage = `url(${syau})`;})
-
-	let randomi = Math.floor(Math.random()*10)
-  fetch('https://api.unsplash.com/search/photos?page=1&query=funny&client_id=DWe3Aq2S4cOfU7K_NsuagSQ_CEr1v-Ya89-7K3U5KVQ')
-  .then((response) => response.json())
-  .then((apple) => {let syau = apple.results[randomi].urls.full;
-    document.querySelector('#hello').setAttribute('src',syau);console.log(syau)})
- </script>
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
     integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
     crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
     integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
