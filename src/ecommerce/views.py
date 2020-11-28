@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+import json
 
 from .forms import ContactForm
 
@@ -15,6 +16,7 @@ def home_page(request):
     if request.user.is_authenticated():
         context["premium_content"] = f'{request.user.full_name} you are amazing !!!'
     return render(request, "home_page.html", context)
+
 
 
 def about_page(request):

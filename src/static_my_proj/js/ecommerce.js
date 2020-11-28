@@ -1,15 +1,12 @@
 $(document).ready(function() {
   // Contact Form Handler
-  let fetched = fetch('https://api.unsplash.com/photos/?client_id=DWe3Aq2S4cOfU7K_NsuagSQ_CEr1v-Ya89-7K3U5KVQ').then((response) => response.json()).then((apple) => {let syau = apple[0].urls.full})
-  document.body.style.backgroundImage = `url(${fetched})`
-  console.log(fetched)
   var contactForm = $(".contact-form");
   var contactFormMethod = contactForm.attr("method");
   var contactFormEndpoint = contactForm.attr("action"); // /abc/
 
   function displaySubmitting(submitBtn, defaultText, doSubmit) {
     if (doSubmit) {
-      submitBtn.addClass("disabled");
+      submitBtn.addClass("disabled"); 
       submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending...");
     } else {
       submitBtn.removeClass("disabled");
@@ -251,4 +248,3 @@ $(document).ready(function() {
   }
 });
 
-let fetched = fetch('https://api.unsplash.com/photos/?client_id=DWe3Aq2S4cOfU7K_NsuagSQ_CEr1v-Ya89-7K3U5KVQ').then((response) => console.log(response.json()))
