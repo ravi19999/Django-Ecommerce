@@ -24,7 +24,7 @@ six==1.15.0
 stripe==1.67.0
 toml==0.10.1
 typed-ast==1.4.1
-urllib3==1.25.10
+urllib3==1.26.5
 whitenoise==5.2.0
 wincertstore==0.2
 wrapt==1.12.1
